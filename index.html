@@ -323,6 +323,8 @@
                     <form id="suggestionForm">
                         <div class="form-group">
                             <label for="studentName">ناوی تەواو</label>
+                            <p class="optional-note">قوتابی ئازادە لە نوسین یان نەنوسینی ئەم بەشە</p>
+                            
                             <input type="text" id="studentName" placeholder="ناوەکەت لێرە بنووسە (ئارەزومەندانە)">
                         </div>
 
@@ -330,12 +332,13 @@
                             <label for="department">بەشی خوێندن</label>
                             <select id="department" required>
                                 <option value="">بەشێک هەڵبژێرە</option>
-                                <option value="پزیشکی">پزیشکی</option>
-                                <option value="ئەندازیاری">ئەندازیاری</option>
-                                <option value="زانست">زانست</option>
-                                <option value="ئاداب">ئاداب</option>
-                                <option value="بەڕێوەبردن">بەڕێوەبردن</option>
-                                <option value="دیسان">دیسان</option>
+                                <option value="پزیشکی">زانستی گشتی</option>
+                                <option value="ئەندازیاری">ئینگلیزی</option>
+                                <option value="زانست">عەرەبی</option>
+                                <option value="ئاداب">بیرکاری</option>
+                                <option value="بەڕێوەبردن">وەرزش</option>
+                                <option value="دیسان">کۆمەڵایەتی</option>
+                                <option value="دیسان">هیتر</option>
                             </select>
                         </div>
 
@@ -348,10 +351,11 @@
                             <label for="suggestionType">جۆری گازندە</label>
                             <select id="suggestionType" required>
                                 <option value="">جۆرێک هەڵبژێرە</option>
-                                <option value="پێشنیار">پێشنیار</option>
-                                <option value="مشکلات">مشکلات</option>
+                                <option value="تەندروستی">تەندروستی</option>
+                                <option value="ژینگە">ژینگە</option>
                                 <option value="چاکسازی">پێشنیاری چاکسازی</option>
-                                <option value="پرسیار">پرسیار</option>
+                                <option value="مەترسی">مەترسی</option>
+                                <option value="هیتر">هیتر</option>
                             </select>
                         </div>
 
@@ -368,7 +372,7 @@
                         </div>
 
                         <button type="submit" class="submit-btn">
-                            <i class="fab fa-telegram"></i> ناردنی گازندە بۆ تێلیگرام
+                            <i class="fab fa-telegram"></i> ناردنی گازندە
                         </button>
                     </form>
                 </div>
@@ -378,7 +382,7 @@
         <div class="loading" id="loadingSection">
             <div style="padding: 40px 20px; text-align: center;">
                 <i class="fas fa-spinner fa-spin" style="font-size: 3em; color: #3498db; margin-bottom: 20px;"></i>
-                <h2>گازندە نێردرە بۆ تێلیگرام...</h2>
+                <h2>گازندەکە نێردرا ...</h2>
                 <p style="margin-top: 10px; color: #7f8c8d;">تکایە کەمێك چاوەڕێ بکە</p>
             </div>
         </div>
