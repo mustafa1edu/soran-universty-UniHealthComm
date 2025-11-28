@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="ku">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لیژنەی تەندروستی و سەلامەتی</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; padding: 0; }
+        
+        /* دەستپێکی ناوەڕۆک */
+        .app-container { 
+            max-width: 100%; 
+            margin: 0 auto; 
+            background: white; 
+            border-radius: 0; 
+            box-shadow: 0 5px 25px rgba(0,0,0,0.15); 
+            overflow: hidden; 
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* سەرپەڕە */
+        .header { 
+            background: linear-gradient(135deg, #2c3e50, #3498db); 
+            color: white; 
+            padding: 25px 20px; 
+            text-align: center; 
+            position: relative;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .header h1 { font-size: 1.8em; margin-bottom: 8px; font-weight: 700; }
+        .header p { font-size: 1em; opacity: 0.9; }
+        
+        /* ناوەڕۆکی سەرەکی */
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+        
+        /* بەشەکان */
+        .section { 
+            padding: 25px 20px; 
+            display: none;
+            flex: 1;
+        }
+        .section.active { 
+            display: block; 
+            animation: fadeIn 0.5s ease;
+        }
+        
+        /* ناوەڕۆکی سەرەکی */
+        .content-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border: 1px solid #f0f0f0;
+        }
+        
+        /* لیستی ڕێنماییەکان */
+        .guideline-list {
+            list-style: none;
+        }
+        .guideline-item {
+            padding: 15px;
+            margin-bottom: 12px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 4px solid #3498db;
+            display: flex;
+            align-items: flex-start;
+        }
+        .guideline-icon {
+            margin-right: 12px;
+            color: #3498db;
+            font-size: 1.2em;
+            margin-top: 2px;
+        }
+        
+        /* فۆرم */
+        .form-group { margin-bottom: 20px; }
+        label { display: block; margin-bottom: 8px; font-weight: 600; color: #2c3e50; font-size: 0.95em; }
+        input, select, textarea { 
+            width: 100%; 
+            padding: 14px 15px; 
+            border: 2px solid #e0e0e0; 
+            border-radius: 10px; 
+            font-size: 16px; 
+            transition: all 0.3s ease; 
+            background: #f8f9fa;
+        }
+        input:focus, select:focus, textarea:focus { 
+            outline: none; 
+            border-color: #3498db; 
+            background: white;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+        }
+        textarea { height: 120px; resize: vertical; }
+        .checkbox-group { display: flex; align-items: center; gap: 10px; margin-top: 10px; }
+        .checkbox-group input { width: auto; }
+        
+        /* بەشی ناو و ژمارەی مۆبایل */
+        .optional-section {
+            background: #e8f4fc;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border-left: 4px solid #3498db;
+        }
+        .optional-note {
+            font-size: 0.85em;
+            color: #2c3e50;
+            margin-top: 8px;
+            opacity: 0.8;
+        }
+        
+        /* دوگمەکان */
+        .submit-btn { 
+            background: linear-gradient(135deg, #3498db, #2980b9); 
+            color: white; 
+            border: none; 
+            padding: 16px 30px; 
+            font-size: 16px; 
+            font-weight: 600;
+            border-radius: 50px; 
+            cursor: pointer; 
+            transition: all 0.3s ease; 
+            display: block; 
+            width: 100%;
+            margin: 25px auto 0; 
+            box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+        }
+        .submit-btn:hover { 
+            transform: translateY(-2px); 
+            box-shadow: 0 8px 20px rgba(52, 152, 219, 0.4);
+        }
+        
+        /* لیستی خوارەوە */
+        .bottom-nav {
+            display: flex;
+            background: white;
+            border-top: 1px solid #e0e0e0;
+            position: sticky;
+            bottom: 0;
+            z-index: 10;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+        }
+        .nav-item {
+            flex: 1;
+            text-align: center;
+            padding: 15px 10px;
+            color: #7f8c8d;
+            font-size: 0.85em;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .nav-item.active {
+            color: #3498db;
+            border-top: 3px solid #3498db;
+        }
+        .nav-icon {
+            display: block;
+            font-size: 1.4em;
+            margin-bottom: 5px;
+        }
+        
+        /* بەشی ئەنجام */
+        .result-section { 
+            display: none; 
+            padding: 30px 20px; 
+            text-align: center; 
+            background: #f8f9fa; 
+            flex: 1;
+        }
+        .success-icon { 
+            font-size: 4em; 
+            color: #27ae60; 
+            margin-bottom: 20px; 
+        }
+        .code-display { 
+            background: #2c3e50; 
+            color: white; 
+            padding: 15px; 
+            border-radius: 10px; 
+            font-family: monospace; 
+            font-size: 1.2em; 
+            margin: 20px 0; 
+            letter-spacing: 1px;
+        }
+        .loading { 
+            display: none; 
+            text-align: center; 
+            padding: 40px 20px; 
+            flex: 1;
+        }
+        
+        /* پەیغامی پەیوەندی */
+        .config-info { 
+            background: linear-gradient(135deg, #d4edda, #c3e6cb); 
+            padding: 15px; 
+            margin: 0 0 20px 0; 
+            border-radius: 0; 
+            text-align: center; 
+            color: #155724;
+            font-weight: 500;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        
+        /* ناونیشانی بەشەکان */
+        .section-title {
+            font-size: 1.4em;
+            margin-bottom: 20px;
+            color: #2c3e50;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+        }
+        .section-title i {
+            margin-right: 10px;
+            color: #3498db;
+        }
+        
+        /* ئەنیمەیشن */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* وەڵامدانەوەی مۆبایل */
+        @media (min-width: 768px) {
+            body { padding: 20px; }
+            .app-container { 
+                max-width: 500px; 
+                border-radius: 20px; 
+                min-height: auto; 
+                max-height: 90vh; 
+                overflow: hidden;
+            }
+            .header { padding: 30px 20px; }
+            .header h1 { font-size: 2em; }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <div class="header">
+            <h1>لیژنەی تەندروستی و سەلامەتی</h1>
+            <p>گازندە و پێشنیارەکانت بنێرە</p>
+        </div>
+
+        <div class="config-info">
+            <i class="fas fa-check-circle"></i> 
+            <i class="fab fa-telegram"></i> 
+        </div>
+
+        <div class="main-content">
+            <!-- بەشی ڕێنماییەکان -->
+            <div class="section active" id="guidelinesSection">
+                <div class="content-card">
+                    <h2 class="section-title"><i class="fas fa-info-circle"></i> ڕێنماییەکان</h2>
+                    <p style="margin-bottom: 20px; color: #555; line-height: 1.6;">بەخێربێیت بۆ سیستەمی گازندە و پێشنیاری لیژنەی تەندروستی. تکایە پێش ناردنی گازندەکەت، ئەم ڕێنماییانە بخوێنەرەوە.</p>
+                    
+                    <ul class="guideline-list">
+                        <li class="guideline-item">
+                            <div class="guideline-icon"><i class="fas fa-user-shield"></i></div>
+                            <div>
+                                <strong>تەندروستی کەسی</strong>
+                                <p>گازندەکانت دەربارەی تەندروستی کەسی خۆت یان هاوڕێکەت نەبن.</p>
+                            </div>
+                        </li>
+                        <li class="guideline-item">
+                            <div class="guideline-icon"><i class="fas fa-comment-medical"></i></div>
+                            <div>
+                                <strong>ڕێز و پێروە</strong>
+                                <p>گازندەکانت بە شێوازێکی ڕێزدارانە و پێروە بنووسە.</p>
+                            </div>
+                        </li>
+                        <li class="guideline-item">
+                            <div class="guideline-icon"><i class="fas fa-lightbulb"></i></div>
+                            <div>
+                                <strong>پێشنیاری کارامە</strong>
+                                <p>پێشنیارەکانت ڕوون و کارامە بن و چارەسەرێکی ڕاستەقینە پێشنیار بکە.</p>
+                            </div>
+                        </li>
+                        <li class="guideline-item">
+                            <div class="guideline-icon"><i class="fas fa-clock"></i></div>
+                            <div>
+                                <strong>وەڵامدانەوە</strong>
+                                <p>وەڵامی گازندەکانت لە ماوەی ٢٤-٤٨ کاتژمێردا دەدرێتەوە.</p>
+                            </div>
+                        </li>
+                        <li class="guideline-item">
+                            <div class="guideline-icon"><i class="fas fa-stethoscope"></i></div>
+                            <div>
+                                <strong>مەرجی فوری</strong>
+                                <p>ئەگەر کێشەیەکی فوری و تەندروستیت هەیە، ڕاستەوخۆ پەیوەندی بە نەخۆشخانە یان پزیشکەکەتەوە بکە.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                
+                <button class="submit-btn" onclick="showSection('suggestionsSection')">
+                    <i class="fas fa-paper-plane"></i> گازندەیەک بنێرە
+                </button>
+            </div>
+            
+            <!-- بەشی گازندەکان -->
+            <div class="section" id="suggestionsSection">
+                <div class="content-card">
+                    <h2 class="section-title"><i class="fas fa-edit"></i> گازندەی نوێ</h2>
+                    
+                    <div class="optional-section">
+                        <h3><i class="fas fa-user-circle"></i> زانیاری کەسی (ئارەزومەندانە)</h3>
+                        <p class="optional-note">قوتابی ئازادە لە نوسین یان نەنوسینی ئەم بەشە</p>
+                    </div>
+                    
+                    <form id="suggestionForm">
+                        <div class="form-group">
+                            <label for="studentName">ناوی تەواو</label>
+                            <input type="text" id="studentName" placeholder="ناوەکەت لێرە بنووسە (ئارەزومەندانە)">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="department">بەشی خوێندن</label>
+                            <select id="department" required>
+                                <option value="">بەشێک هەڵبژێرە</option>
+                                <option value="پزیشکی">پزیشکی</option>
+                                <option value="ئەندازیاری">ئەندازیاری</option>
+                                <option value="زانست">زانست</option>
+                                <option value="ئاداب">ئاداب</option>
+                                <option value="بەڕێوەبردن">بەڕێوەبردن</option>
+                                <option value="دیسان">دیسان</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="phone">ژمارەی مۆبایڵ</label>
+                            <input type="tel" id="phone" placeholder="ژمارەکەت لێرە بنووسە (ئارەزومەندانە)">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="suggestionType">جۆری گازندە</label>
+                            <select id="suggestionType" required>
+                                <option value="">جۆرێک هەڵبژێرە</option>
+                                <option value="پێشنیار">پێشنیار</option>
+                                <option value="مشکلات">مشکلات</option>
+                                <option value="چاکسازی">پێشنیاری چاکسازی</option>
+                                <option value="پرسیار">پرسیار</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="suggestionDescription">پێناسەی گازندە</label>
+                            <textarea id="suggestionDescription" placeholder="گازندە یان پێشنیارەکەت لێرە بنووسە..." required></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="anonymous">
+                                <label for="anonymous">ناردنی بەشێوەی نەناسراو</label>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="submit-btn">
+                            <i class="fab fa-telegram"></i> ناردنی گازندە بۆ تێلیگرام
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="loading" id="loadingSection">
+            <div style="padding: 40px 20px; text-align: center;">
+                <i class="fas fa-spinner fa-spin" style="font-size: 3em; color: #3498db; margin-bottom: 20px;"></i>
+                <h2>گازندە نێردرە بۆ تێلیگرام...</h2>
+                <p style="margin-top: 10px; color: #7f8c8d;">تکایە کەمێك چاوەڕێ بکە</p>
+            </div>
+        </div>
+
+        <div class="result-section" id="resultSection">
+            <div class="success-icon"><i class="fas fa-check-circle"></i></div>
+            <h2>گازندەکەت بە سەرکەوتوویی نێردرا!</h2>
+         
+            <div class="code-display" id="codeDisplay"></div>
+            <button class="submit-btn" onclick="showSection('suggestionsSection')">
+                <i class="fas fa-plus-circle"></i> گازندەیەکی تر بنێرە
+            </button>
+        </div>
+
+        <!-- لیستی خوارەوە -->
+        <div class="bottom-nav">
+            <div class="nav-item active" onclick="showSection('guidelinesSection')">
+                <i class="fas fa-info-circle nav-icon"></i>
+                ڕێنمایی
+            </div>
+            <div class="nav-item" onclick="showSection('suggestionsSection')">
+                <i class="fas fa-edit nav-icon"></i>
+                گازندە
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ڕێکخستنەکان
+        const BOT_TOKEN = '7828982888:AAGCIYVMVKvMZ5CmZNSynHOBegH_-UkDASc';
+        const CHAT_ID = '7729017182';
+
+        let submissionCounter = parseInt(localStorage.getItem('submissionCounter')) || 1;
+
+        // نیشاندانی بەشێکی دیاریکراو
+        function showSection(sectionId) {
+            // لەخۆگرتنەوەی هەموو بەشەکان
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // نیشاندانی بەشی دیاریکراو
+            document.getElementById(sectionId).classList.add('active');
+            
+            // نوێکردنەوەی لیستی خوارەوە
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            if (sectionId === 'guidelinesSection') {
+                document.querySelectorAll('.nav-item')[0].classList.add('active');
+            } else if (sectionId === 'suggestionsSection') {
+                document.querySelectorAll('.nav-item')[1].classList.add('active');
+            }
+        }
+
+        document.getElementById('suggestionForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const formData = {
+                id: submissionCounter++,
+                name: document.getElementById('anonymous').checked ? 'نەناسراو' : 
+                      (document.getElementById('studentName').value || 'نەناسراو'),
+                department: document.getElementById('department').value,
+                phone: document.getElementById('phone').value || 'نەناسراو',
+                type: document.getElementById('suggestionType').value,
+                description: document.getElementById('suggestionDescription').value,
+                date: new Date().toLocaleString('ku-IQ'),
+                code: `#TND${new Date().getFullYear()}${submissionCounter.toString().padStart(3, '0')}`
+            };
+
+            // نیشاندانی بار
+            document.querySelector('.main-content').style.display = 'none';
+            document.getElementById('loadingSection').style.display = 'block';
+
+            try {
+                await sendToTelegram(formData);
+                
+                localStorage.setItem('submissionCounter', submissionCounter.toString());
+                
+                document.getElementById('loadingSection').style.display = 'none';
+                document.getElementById('resultSection').style.display = 'block';
+                document.getElementById('codeDisplay').textContent = formData.code;
+                
+                this.reset();
+            } catch (error) {
+                alert('هەڵە ڕوویدا! تکایە دووبارە هەوڵبدەرەوە.');
+                document.getElementById('loadingSection').style.display = 'none';
+                document.querySelector('.main-content').style.display = 'block';
+                showSection('suggestionsSection');
+            }
+        });
+
+        async function sendToTelegram(data) {
+            const message = `
+🔔 **گازندەی نوێ** 🔔
+
+📋 **کۆد**: ${data.code}
+👤 **ناو**: ${data.name}
+🎓 **بەش**: ${data.department}
+📞 **مۆبایڵ**: ${data.phone}
+📝 **جۆر**: ${data.type}
+📅 **بەروار**: ${data.date}
+
+📄 **پێناسە**:
+${data.description}
+
+✅ **گازندەکە وەرگیرا**
+            `;
+
+            const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
+            
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    chat_id: CHAT_ID,
+                    text: message,
+                    parse_mode: 'Markdown'
+                })
+            });
+
+            if (!response.ok) {
+                throw new Error('کێشە لە ناردنی نامەکە');
+            }
+
+            return await response.json();
+        }
+
+        // تێستکردنی پەیوەندی
+        console.log('✅ سیستەم ئامادەیە!');
+        console.log('🤖 بۆت:', BOT_TOKEN);
+        console.log('👤 چات ئایدی:', CHAT_ID);
+    </script>
+</body>
+</html>
